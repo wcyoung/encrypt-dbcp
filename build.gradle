@@ -10,7 +10,7 @@ compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 
 group = 'wcyoung'
-version = '0.0.1.SNAPSHOT'
+version = '0.0.9.SNAPSHOT'
 
 repositories {
     jcenter()
@@ -22,4 +22,8 @@ def libVer = [
 
 dependencies {
     implementation group: "org.apache.tomcat", name: "tomcat-dbcp", version: "${libVer.tomcatDbcp}"
+}
+
+jar {
+    baseName = "${rootProject.group}-${rootProject.name}"
 }
