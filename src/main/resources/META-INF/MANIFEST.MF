@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Implementation-Title: encrypted-dbcp
+Implementation-Version: 0.9.0.SNAPSHOT
+Implementation-Vendor: wcyoung
