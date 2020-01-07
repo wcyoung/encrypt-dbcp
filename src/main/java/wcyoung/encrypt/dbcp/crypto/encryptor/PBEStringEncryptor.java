@@ -11,7 +11,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
-import wcyoung.encrypt.dbcp.crypto.DefaultCryptoParameter;
+import wcyoung.encrypt.dbcp.crypto.CryptoConst;
 
 public class PBEStringEncryptor {
 
@@ -19,7 +19,7 @@ public class PBEStringEncryptor {
     private String algorithm;
 
     public PBEStringEncryptor(String encryptKey) throws Exception {
-        this(encryptKey, DefaultCryptoParameter.ALGORITHM);
+        this(encryptKey, CryptoConst.ALGORITHM);
     }
 
     public PBEStringEncryptor(String encryptKey, String algorithm) throws Exception {
@@ -32,7 +32,7 @@ public class PBEStringEncryptor {
         Random random = new Random();
         random.nextBytes(salt);
 
-        PBEParameterSpec parameterSpec = new PBEParameterSpec(salt, DefaultCryptoParameter.ITERATIONS);
+        PBEParameterSpec parameterSpec = new PBEParameterSpec(salt, CryptoConst.ITERATIONS);
 
         Cipher cipher = Cipher.getInstance(algorithm);
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, parameterSpec);
@@ -54,7 +54,7 @@ public class PBEStringEncryptor {
         byte[] salt = decoder.decode(saltString);
         byte[] encrypted = decoder.decode(encryptedString);
 
-        PBEParameterSpec parameterSpec = new PBEParameterSpec(salt, DefaultCryptoParameter.ITERATIONS);
+        PBEParameterSpec parameterSpec = new PBEParameterSpec(salt, CryptoConst.ITERATIONS);
 
         Cipher cipher = Cipher.getInstance(algorithm);
         cipher.init(Cipher.DECRYPT_MODE, secretKey, parameterSpec);

@@ -1,6 +1,6 @@
 package wcyoung.encrypt.dbcp.crypto;
 
-public interface DefaultCryptoParameter {
+public interface CryptoConst {
 
     public static final int ITERATIONS = 1000;
 
