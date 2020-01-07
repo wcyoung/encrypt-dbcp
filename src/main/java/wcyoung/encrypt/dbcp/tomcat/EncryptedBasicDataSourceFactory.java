@@ -1,6 +1,5 @@
 package wcyoung.encrypt.dbcp.tomcat;
 
-import java.util.Base64;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -12,6 +11,9 @@ import javax.naming.StringRefAddr;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory;
 
+import wcyoung.encrypt.dbcp.config.ConfigurationProperties;
+import wcyoung.encrypt.dbcp.crypto.encryptor.PBEStringEncryptor;
+
 public class EncryptedBasicDataSourceFactory extends BasicDataSourceFactory {
 
     private final String ENCRYPTED_PREFIX = "ENC(";
@@ -21,16 +23,17 @@ public class EncryptedBasicDataSourceFactory extends BasicDataSourceFactory {
     public Object getObjectInstance(Object obj, Name name, Context nameCtx, Hashtable<?, ?> environment)
             throws Exception {
         if (obj instanceof Reference) {
-            findDecryptAndReplace((Reference) obj, "password");
+            ConfigurationProperties properties = new ConfigurationProperties("/properties/config.properties");
+            findDecryptAndReplace((Reference) obj, "password", properties.getProperty("dbcp.encrypt.key"));
         }
 
         return super.getObjectInstance(obj, name, nameCtx, environment);
     }
 
-    private void findDecryptAndReplace(Reference reference, String addrType) {
+    private void findDecryptAndReplace(Reference reference, String addrType, String encryptKey) throws Exception {
         int index = find(reference, addrType);
         if (index != -1) {
-            String decryptedText = decrypt(reference, index);
+            String decryptedText = decrypt(reference, index, encryptKey);
             replace(reference, addrType, index, decryptedText);
         }
     }
@@ -47,13 +50,13 @@ public class EncryptedBasicDataSourceFactory extends BasicDataSourceFactory {
         return -1;
     }
 
-    private String decrypt(Reference reference, int index) {
+    private String decrypt(Reference reference, int index, String encryptKey) throws Exception {
         String original = reference.get(index).getContent().toString();
         if (original.startsWith(ENCRYPTED_PREFIX) && original.endsWith(ENCRYPTED_SUFFIX)) {
             original = original.substring(ENCRYPTED_PREFIX.length());
             original = original.substring(0, original.length() - ENCRYPTED_SUFFIX.length());
-            // TODO decrypt
-            return new String(Base64.getDecoder().decode(original.getBytes()));
+            PBEStringEncryptor encryptor = new PBEStringEncryptor(encryptKey);
+            return encryptor.decrypt(original);
         }
 
         return original;
