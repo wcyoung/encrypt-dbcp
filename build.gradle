@@ -17,11 +17,14 @@ repositories {
 }
 
 def libVer = [
-    tomcatDbcp: '8.5.49'
+    tomcatDbcp: '8.5.49',
+    junit: '4.13'
 ]
 
 dependencies {
     implementation group: "org.apache.tomcat", name: "tomcat-dbcp", version: "${libVer.tomcatDbcp}"
+
+    testImplementation group: "junit", name: "junit", version: "${libVer.junit}"
 }
 
 jar {
