@@ -18,11 +18,21 @@ public class PBEStringEncryptor {
     private SecretKey secretKey;
     private String algorithm;
 
+    public PBEStringEncryptor() throws Exception {
+        this(null, null);
+    }
+
     public PBEStringEncryptor(String encryptKey) throws Exception {
-        this(encryptKey, CryptoConst.ALGORITHM);
+        this(encryptKey, null);
     }
 
     public PBEStringEncryptor(String encryptKey, String algorithm) throws Exception {
+        if (encryptKey == null) {
+            encryptKey = CryptoConst.ENCRYPT_KEY;
+        }
+        if (algorithm == null) {
+            algorithm = CryptoConst.ALGORITHM;
+        }
         this.algorithm = algorithm;
         this.secretKey = generateSecretKey(encryptKey);
     }

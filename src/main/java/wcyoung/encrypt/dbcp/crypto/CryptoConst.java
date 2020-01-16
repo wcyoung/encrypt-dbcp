@@ -6,4 +6,6 @@ public interface CryptoConst {
 
     public static final String ALGORITHM = "PBEWithMD5AndDES";
 
+    public static final String ENCRYPT_KEY = "ZGVmYXVsdEVuY3J5cHRLZXk";
+
 }
