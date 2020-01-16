@@ -39,7 +39,7 @@ public class PBEStringEncryptor {
 
         byte[] encrypted = cipher.doFinal(plainText.getBytes());
 
-        Encoder encoder = Base64.getEncoder();
+        Encoder encoder = Base64.getUrlEncoder().withoutPadding();
         String saltString = encoder.encodeToString(salt);
         String encryptedString = encoder.encodeToString(encrypted);
 
@@ -50,7 +50,7 @@ public class PBEStringEncryptor {
         String saltString = encryptedText.substring(0, 12);
         String encryptedString = encryptedText.substring(12);
 
-        Decoder decoder = Base64.getDecoder();
+        Decoder decoder = Base64.getUrlDecoder();
         byte[] salt = decoder.decode(saltString);
         byte[] encrypted = decoder.decode(encryptedString);
 
