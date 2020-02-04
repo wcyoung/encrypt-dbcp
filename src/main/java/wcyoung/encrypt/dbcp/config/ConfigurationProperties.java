@@ -9,10 +9,14 @@ public class ConfigurationProperties {
     private Properties properties;
 
     public ConfigurationProperties() {
+        this("dbcp.configurationFile");
+    }
+
+    public ConfigurationProperties(String argumentKey) {
         try {
             InputStream inputStream = null;
 
-            String argumentFilePath = System.getProperty("dbcp.configurationFile");
+            String argumentFilePath = System.getProperty(argumentKey);
             if (argumentFilePath != null && argumentFilePath.trim().length() != 0) {
                 inputStream = new FileInputStream(argumentFilePath);
             }
