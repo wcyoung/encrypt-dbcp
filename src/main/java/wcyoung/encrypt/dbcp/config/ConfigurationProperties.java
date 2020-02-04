@@ -9,7 +9,7 @@ public class ConfigurationProperties {
     private Properties properties;
 
     public ConfigurationProperties(String defaultFilePath) {
-        this("encryptKey.configurationFile", defaultFilePath);
+        this("dbcp.configurationFile", defaultFilePath);
     }
 
     public ConfigurationProperties(String argumentKey, String defaultFilePath) {
