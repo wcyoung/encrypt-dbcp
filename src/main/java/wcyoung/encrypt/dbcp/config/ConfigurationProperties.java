@@ -8,24 +8,21 @@ public class ConfigurationProperties {
 
     private Properties properties;
 
-    public ConfigurationProperties(String defaultFilePath) {
-        this("dbcp.configurationFile", defaultFilePath);
-    }
-
-    public ConfigurationProperties(String argumentKey, String defaultFilePath) {
+    public ConfigurationProperties() {
         try {
             InputStream inputStream = null;
 
-            String argumentFilePath = System.getProperty(argumentKey);
+            String argumentFilePath = System.getProperty("dbcp.configurationFile");
             if (argumentFilePath != null && argumentFilePath.trim().length() != 0) {
                 inputStream = new FileInputStream(argumentFilePath);
-            } else {
-                inputStream = getClass().getClassLoader().getResourceAsStream(defaultFilePath);
             }
 
             properties = new Properties();
-            properties.load(inputStream);
-            inputStream.close();
+
+            if (inputStream != null) {
+                properties.load(inputStream);
+                inputStream.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

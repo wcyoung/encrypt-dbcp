@@ -23,7 +23,7 @@ public class EncryptedBasicDataSourceFactory extends BasicDataSourceFactory {
     public Object getObjectInstance(Object obj, Name name, Context nameCtx, Hashtable<?, ?> environment)
             throws Exception {
         if (obj instanceof Reference) {
-            ConfigurationProperties properties = new ConfigurationProperties("/properties/config.properties");
+            ConfigurationProperties properties = new ConfigurationProperties();
             findDecryptAndReplace((Reference) obj, "password", properties.getProperty("dbcp.encrypt.key"));
         }
 
