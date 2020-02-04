@@ -8,4 +8,6 @@ public interface CryptoConst {
 
     public static final String ENCRYPT_KEY = "ZGVmYXVsdEVuY3J5cHRLZXk";
 
+    public static final String CHARSET = "UTF-8";
+
 }

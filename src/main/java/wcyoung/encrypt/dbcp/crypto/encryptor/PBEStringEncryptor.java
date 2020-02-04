@@ -38,6 +38,10 @@ public class PBEStringEncryptor {
     }
 
     public String encrypt(String plainText) throws Exception {
+        return encrypt(plainText, CryptoConst.CHARSET);
+    }
+
+    public String encrypt(String plainText, String charsetName) throws Exception {
         byte[] salt = new byte[8];
         Random random = new Random();
         random.nextBytes(salt);
@@ -47,7 +51,7 @@ public class PBEStringEncryptor {
         Cipher cipher = Cipher.getInstance(algorithm);
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, parameterSpec);
 
-        byte[] encrypted = cipher.doFinal(plainText.getBytes());
+        byte[] encrypted = cipher.doFinal(plainText.getBytes(charsetName));
 
         Encoder encoder = Base64.getUrlEncoder();
         String saltString = encoder.encodeToString(salt);
@@ -57,6 +61,10 @@ public class PBEStringEncryptor {
     }
 
     public String decrypt(String encryptedText) throws Exception {
+        return decrypt(encryptedText, CryptoConst.CHARSET);
+    }
+
+    public String decrypt(String encryptedText, String charsetName) throws Exception {
         String saltString = encryptedText.substring(0, 12);
         String encryptedString = encryptedText.substring(12);
 
